@@ -54,11 +54,8 @@ public class PdfFilePreviewImpl implements FilePreview {
             }
             model.addAttribute("imgurls", imageUrls);
             model.addAttribute("currentUrl", imageUrls.get(0));
-            if (OfficeFilePreviewImpl.OFFICE_PREVIEW_TYPE_IMAGE.equals(officePreviewType)) {
-                return OFFICE_PICTURE_FILE_PREVIEW_PAGE;
-            } else {
-                return PICTURE_FILE_PREVIEW_PAGE;
-            }
+            return OFFICE_PICTURE_FILE_PREVIEW_PAGE;
+
         } else {
             // 不是http开头，浏览器不能直接访问，需下载到本地
             if (url != null && !url.toLowerCase().startsWith("http")) {

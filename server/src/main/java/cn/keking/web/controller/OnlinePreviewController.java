@@ -117,30 +117,6 @@ public class OnlinePreviewController {
         return filePreview.filePreviewHandle(fileUrl, model, fileAttribute);
     }
 
-    @RequestMapping(value = "/picturesPreview")
-    public String picturesPreview(String urls, Model model, HttpServletRequest req) throws UnsupportedEncodingException {
-        String fileUrls;
-        try {
-            fileUrls = new String(Base64.decodeBase64(urls));
-        } catch (Exception ex) {
-            String errorMsg = String.format(BASE64_DECODE_ERROR_MSG, "urls");
-            return otherFilePreview.notSupportedFile(model, errorMsg);
-        }
-        logger.info("预览文件url：{}，urls：{}", fileUrls, urls);
-        // 抽取文件并返回文件列表
-        String[] images = fileUrls.split("\\|");
-        List<String> imgUrls = Arrays.asList(images);
-        model.addAttribute("imgUrls", imgUrls);
-
-        String currentUrl = req.getParameter("currentUrl");
-        if (StringUtils.hasText(currentUrl)) {
-            String decodedCurrentUrl = new String(Base64.decodeBase64(currentUrl));
-            model.addAttribute("currentUrl", decodedCurrentUrl);
-        } else {
-            model.addAttribute("currentUrl", imgUrls.get(0));
-        }
-        return PICTURE_FILE_PREVIEW_PAGE;
-    }
 
     /**
      * 根据url获取文件内容

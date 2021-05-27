@@ -84,10 +84,6 @@ public class OfficeFilePreviewImpl implements FilePreview {
         }
         model.addAttribute("imgurls", imageUrls);
         model.addAttribute("currentUrl", imageUrls.get(0));
-        if (officePreviewTypeImage.equals(officePreviewType)) {
-            return OFFICE_PICTURE_FILE_PREVIEW_PAGE;
-        } else {
-            return PICTURE_FILE_PREVIEW_PAGE;
-        }
+        return OFFICE_PICTURE_FILE_PREVIEW_PAGE;
     }
 }
