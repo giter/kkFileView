@@ -104,7 +104,7 @@ public class OnlinePreviewController {
 
                 if (filePreview != null) {
 
-                    logger.info("预览文件url：{}，previewType：{}", fileUrl, previewType);
+                    logger.info("预览文件url1：{}，previewType：{}", fileUrl, previewType);
                     return filePreview.filePreviewHandle(fileUrl, model, fileAttribute);
                 }
             }
@@ -112,7 +112,7 @@ public class OnlinePreviewController {
 
 
         filePreview = previewFactory.get(fileAttribute);
-        logger.info("预览文件url：{}，previewType：{}", fileUrl, fileAttribute.getType());
+        logger.info("预览文件url2：{}，previewType：{}", fileUrl, fileAttribute.getType());
 
         return filePreview.filePreviewHandle(fileUrl, model, fileAttribute);
     }
