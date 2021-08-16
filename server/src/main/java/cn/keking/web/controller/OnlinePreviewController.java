@@ -77,7 +77,7 @@ public class OnlinePreviewController {
         if(fileAttribute.getUrl().startsWith("http")){
 
             ReturnResponse<String> response = DownloadUtils.downLoad(fileAttribute, fileAttribute.getName());
-logger.info("code:{}",response.getCode());
+            logger.info("url:{}, code:{}",fileAttribute.getUrl(), response.getCode());
             if (response.getCode() == 0) {
 
                 Tika tika = new Tika();
@@ -97,6 +97,7 @@ logger.info("code:{}",response.getCode());
                         type.contains("powerpoint") ||
                         type.contains("openxmlformats") ||
                         type.contains("msword") ||
+                        type.contains("msoffice") ||
                         type.contains("ms-word")
                 ) {
                     filePreview = previewFactory.get(FileType.OFFICE);
