@@ -77,13 +77,15 @@ public class OnlinePreviewController {
         if(fileAttribute.getUrl().startsWith("http")){
 
             ReturnResponse<String> response = DownloadUtils.downLoad(fileAttribute, fileAttribute.getName());
-
+logger.info(response.getCode())
             if (response.getCode() == 0) {
 
                 Tika tika = new Tika();
                 String type = tika.detect(new File(response.getContent()));
 
                 String previewType = null;
+                
+                logger.info("type：{}", type);
 
                 if ("application/pdf".equals(type)) {
 
