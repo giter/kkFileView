@@ -77,7 +77,7 @@ public class OnlinePreviewController {
         if(fileAttribute.getUrl().startsWith("http")){
 
             ReturnResponse<String> response = DownloadUtils.downLoad(fileAttribute, fileAttribute.getName());
-logger.info(response.getCode());
+logger.info("code:{}",response.getCode());
             if (response.getCode() == 0) {
 
                 Tika tika = new Tika();
