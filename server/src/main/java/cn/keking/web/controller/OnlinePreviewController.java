@@ -98,6 +98,7 @@ public class OnlinePreviewController {
                         type.contains("openxmlformats") ||
                         type.contains("msword") ||
                         type.contains("msoffice") ||
+                        type.contains("ooxml") ||
                         type.contains("ms-word")
                 ) {
                     filePreview = previewFactory.get(FileType.OFFICE);
