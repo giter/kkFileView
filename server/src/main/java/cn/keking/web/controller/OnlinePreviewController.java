@@ -16,6 +16,9 @@ import io.mola.galimatias.GalimatiasParseException;
 import jodd.io.NetUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.tika.Tika;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.microsoft.OfficeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static cn.keking.service.FilePreview.*;
 
@@ -44,6 +48,7 @@ import static cn.keking.service.FilePreview.*;
 public class OnlinePreviewController {
 
     public static final String BASE64_DECODE_ERROR_MSG = "Base64解码失败，请检查你的 %s 是否采用 Base64 + urlEncode 双重编码了！";
+    public static final Set<MediaType> SUPPORTED_TYPES = new OfficeParser().getSupportedTypes(new ParseContext());
     private final Logger logger = LoggerFactory.getLogger(OnlinePreviewController.class);
 
     private final FilePreviewFactory previewFactory;
@@ -93,13 +98,8 @@ public class OnlinePreviewController {
                     previewType = "PDF";
                     fileAttribute.setOfficePreviewType(PDF_FILE_PREVIEW_PAGE);
 
-                } else if (type.contains("excel") ||
-                        type.contains("powerpoint") ||
-                        type.contains("openxmlformats") ||
-                        type.contains("msword") ||
-                        type.contains("msoffice") ||
-                        type.contains("ooxml") ||
-                        type.contains("ms-word")
+                } else if (SUPPORTED_TYPES.contains(type) ||
+                        type.contains("openxmlformats")
                 ) {
                     filePreview = previewFactory.get(FileType.OFFICE);
                     previewType = "OFFICE";
