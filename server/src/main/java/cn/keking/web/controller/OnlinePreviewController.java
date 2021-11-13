@@ -19,6 +19,7 @@ import org.apache.tika.Tika;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.microsoft.OfficeParser;
+import org.apache.tika.parser.pdf.PDFParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,10 @@ import static cn.keking.service.FilePreview.*;
 public class OnlinePreviewController {
 
     public static final String BASE64_DECODE_ERROR_MSG = "Base64解码失败，请检查你的 %s 是否采用 Base64 + urlEncode 双重编码了！";
-    public static final Set<MediaType> SUPPORTED_TYPES = new OfficeParser().getSupportedTypes(new ParseContext());
+
+    public static final Set<MediaType> OFFICE_TYPES = new OfficeParser().getSupportedTypes(new ParseContext());
+    public static final Set<MediaType> PDF_TYPES = new PDFParser().getSupportedTypes(new ParseContext());
+
     private final Logger logger = LoggerFactory.getLogger(OnlinePreviewController.class);
 
     private final FilePreviewFactory previewFactory;
@@ -92,13 +96,13 @@ public class OnlinePreviewController {
                 
                 logger.info("type：{}", type);
 
-                if ("application/pdf".equals(type)) {
+                if (PDF_TYPES.contains(type)) {
 
                     filePreview = previewFactory.get(FileType.PDF);
                     previewType = "PDF";
                     fileAttribute.setOfficePreviewType(PDF_FILE_PREVIEW_PAGE);
 
-                } else if (SUPPORTED_TYPES.contains(type) ||
+                } else if (OFFICE_TYPES.contains(type) ||
                         type.contains("openxmlformats")
                 ) {
                     filePreview = previewFactory.get(FileType.OFFICE);
