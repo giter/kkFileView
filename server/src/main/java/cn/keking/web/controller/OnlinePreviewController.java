@@ -96,13 +96,13 @@ public class OnlinePreviewController {
                 
                 logger.info("type：{}", type);
 
-                if (PDF_TYPES.contains(type)) {
+                if (PDF_TYPES.contains(MediaType.parse(type))) {
 
                     filePreview = previewFactory.get(FileType.PDF);
                     previewType = "PDF";
                     fileAttribute.setOfficePreviewType(PDF_FILE_PREVIEW_PAGE);
 
-                } else if (OFFICE_TYPES.contains(type) ||
+                } else if (OFFICE_TYPES.contains(MediaType.parse(type)) ||
                         type.contains("openxmlformats")
                 ) {
                     filePreview = previewFactory.get(FileType.OFFICE);
